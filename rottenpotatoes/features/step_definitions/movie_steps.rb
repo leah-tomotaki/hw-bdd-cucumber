@@ -17,7 +17,11 @@ end
 Then (/I should see "(.*)" before "(.*)"/) do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
-  /#{e1}.*#{e2}/m =~ page.body
+  if page.body.respond_to? :should
+    page.body.should =~ /#{e1}.*#{e2}/m 
+  else
+    assert_match(/#{e1}.*#{e2}/m , page.body)
+  end
   # fail "Unimplemented"
 end
 
@@ -29,10 +33,43 @@ When (/I (un)?check the following ratings: (.*)/) do |uncheck, rating_list|
   # HINT: use String#split to split up the rating_list, then
   #   iterate over the ratings and reuse the "When I check..." or
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
-  fail "Unimplemented"
+  # print(rating_list.split(', '))
+  for rating in rating_list.split(', ')
+    if(uncheck)
+      steps %Q{
+        When I uncheck "#{rating}"
+      }
+    else 
+      steps %Q{
+        When I check "#{rating}"
+      }
+    end
+  end
 end
 
 Then (/I should see all the movies/) do
   # Make sure that all the movies in the app are visible in the table
-  fail "Unimplemented"
+  rows = page.all('#movies tbody tr').size
+  expect(rows).to eq Movie.count
+  
+  # FIXME: should this be checked also??
+  
+  # movies_table.hashes.each do |movie| 
+  #   steps %Q{
+  #     Then I should see "#{movie.name}"
+  #   }
+  # end
+end
+
+Then (/the Rating column should (not )?contain the following: (.*)/) do |not_contain, content_list|
+  # this assumes the rating column is always the 2nd column in the table
+  content_list = content_list.split(', ')
+  
+  page.all("#movies tbody tr > td:nth-child(2)").each do |td|
+    if not_contain
+      expect(content_list).not_to include(td.text)
+    else
+      expect(content_list).to include(td.text)
+    end
+  end
 end
