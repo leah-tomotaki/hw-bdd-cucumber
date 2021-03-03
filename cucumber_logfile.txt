@@ -20,21 +20,21 @@ Feature: display list of movies filtered by MPAA rating
     And I am on the RottenPotatoes home page     # features/step_definitions/web_steps.rb:44
     Then 10 seed movies should exist             # features/step_definitions/movie_steps.rb:10
 
-  Scenario: restrict to movies with 'PG' or 'R' ratings                      # features/filter_movie_list.feature:25
+  Scenario: restrict to movies with 'PG' or 'R' ratings               # features/filter_movie_list.feature:25
     # enter step(s) to check the 'PG' and 'R' checkboxes
-    Given I check the following ratings: PG, R                               # features/step_definitions/movie_steps.rb:31
+    Given I check the following ratings: PG, R                        # features/step_definitions/movie_steps.rb:31
     # enter step(s) to uncheck all other checkboxes
-    When I uncheck the following ratings: G, PG-13, NC-17                    # features/step_definitions/movie_steps.rb:31
+    When I uncheck the following ratings: G, PG-13                    # features/step_definitions/movie_steps.rb:31
     # enter step to "submit" the search form on the homepage
-    When I press "Refresh"                                                   # features/step_definitions/web_steps.rb:52
+    When I press "Refresh"                                            # features/step_definitions/web_steps.rb:52
     # enter step(s) to ensure that PG and R movies are visible
-    Then the Rating column should contain the following: PG, R               # features/step_definitions/movie_steps.rb:63
+    Then the Rating column should contain the following: PG, R        # features/step_definitions/movie_steps.rb:64
     # enter step(s) to ensure that other movies are not visible
-    Then the Rating column should not contain the following: G, PG-13, NC-17 # features/step_definitions/movie_steps.rb:63
+    Then the Rating column should not contain the following: G, PG-13 # features/step_definitions/movie_steps.rb:64
 
-  Scenario: all ratings selected                               # features/filter_movie_list.feature:41
-    When I check the following ratings: G, PG, PG-13, R, NC-17 # features/step_definitions/movie_steps.rb:31
-    Then I should see all the movies                           # features/step_definitions/movie_steps.rb:49
+  Scenario: all ratings selected                        # features/filter_movie_list.feature:41
+    When I check the following ratings: G, PG, PG-13, R # features/step_definitions/movie_steps.rb:31
+    Then I should see all the movies                    # features/step_definitions/movie_steps.rb:48
 # see assignment
 
 Feature: display list of movies sorted by different criteria
@@ -68,4 +68,4 @@ Feature: display list of movies sorted by different criteria
 
 4 scenarios (4 passed)
 23 steps (23 passed)
-0m0.560s
+0m0.574s
