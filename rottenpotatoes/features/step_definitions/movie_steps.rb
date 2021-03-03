@@ -32,7 +32,6 @@ When (/I (un)?check the following ratings: (.*)/) do |uncheck, rating_list|
   # HINT: use String#split to split up the rating_list, then
   #   iterate over the ratings and reuse the "When I check..." or
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
-  # print(rating_list.split(', '))
   for rating in rating_list.split(', ')
     if(uncheck)
       steps %Q{
@@ -52,6 +51,8 @@ Then (/I should see all the movies/) do
   expect(rows).to eq Movie.count
   
   # FIXME: should this be checked also??
+  
+  # This iterates throught the table and checks each movie name
   
   # movies_table.hashes.each do |movie| 
   #   steps %Q{
