@@ -24,8 +24,8 @@
 #   pool: 5
 #   timeout: 5000
 
-# cucumber:
-#   <<: *test
+cucumber:
+  <<: *test
 
 default: &default
   adapter: postgresql
